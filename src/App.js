@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState,useCallback,useEffect} from 'react';
+import {Route, BrowserRouter as Router,Switch,Redirect} from "react-router-dom";
 
+import Dasboard from './pages/Dasboard';
+import NotFound from './pages/NotFound';
+import {ToastContainer} from 'react-toastify';
+
+const AppContext = React.createContext();
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router basename="/">
+        <AppContext.Provider>
+      <Switch>
+        <Route exact path="/">                    
+                <Dasboard/>
+          </Route>
+            <Route path="/signout">                    
+                <Redirect to="/" />
+            </Route>
+            <Route component={NotFound} />
+      </Switch>
+        
+        </AppContext.Provider>
+        <div className="app-drawer-overlay d-none animated fadeIn"></div>
+        <ToastContainer/>
+  </Router>
   );
 }
 
